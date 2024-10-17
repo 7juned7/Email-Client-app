@@ -48,13 +48,13 @@
   cursor: pointer;
   color: #ffffff;
 }
-.btn.selected {
+.btn:hover {
   color: #636363;
   cursor: pointer;
   background-color: #e1e4ea;
   border-radius: 30px;
 }
-.btn:hover {
+.btn.selected {
   color: #636363;
   cursor: pointer;
   background-color: #e1e4ea;
@@ -94,12 +94,26 @@
   gap: 2rem;
 }
 .email-side-content {
-  flex: 1.5;
+  display: flex;
+
+  flex: 1.75;
   border: 1px solid #cfd2dc;
   height: 100%;
   min-height: 300px;
   border-radius: 10px;
   background-color: #ffffff;
+  transform: translateX(50%);
+  transition: transform 1s ease;
+}
+.slide-in {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-out {
+  opacity: 0;
+  flex: 0;
+  width: 0px;
+  background-color: red;
 }
 
 .email-body {
@@ -200,8 +214,9 @@ span {
 
     border-radius: 50%;
     height: 50px;
-    position: relative;
+    position: absolute;
     top: 0;
+    cursor: pointer;
   }
   .close::before {
     content: "";
@@ -230,6 +245,7 @@ span {
     gap: 0.5rem;
 
     padding: 1rem;
+    padding-top: 2.5rem;
   }
   .filter {
     flex-wrap: wrap;

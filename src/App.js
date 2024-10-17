@@ -6,7 +6,7 @@ import Filter from "./Components/Filter";
 import "./App.css"
 import PageNavigation from "./Components/PageNavigation";
 function App() {
-
+  const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState([]);
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [emailBody, setEmailBody] = useState(null)
@@ -43,12 +43,18 @@ function App() {
   const handleSelectedEmail = (emailData) => {
     setClose(false)
 
+    setIsVisible(false);
+
+
+
+
     setSelectedEmail(emailData);
 
     fetch(`https://flipkart-email-mock.now.sh/?id=${emailData.id}`)
       .then((response) => response.json())
       .then((data) => {
         setEmailBody(data);
+        setIsVisible(true);
       })
       .catch((error) => {
         console.log("Error in fetching email body", error);
@@ -113,6 +119,7 @@ function App() {
   const handleFilter = (type) => {
     setClose(true)
     setActiveFilter(type);
+
     if (type === "All") {
       setFilteredEmails(email)
     }
@@ -185,8 +192,8 @@ function App() {
           )}
         </article>
 
-        {emailBody && !close && (
-          <aside className={`email-side-content`}>
+        {!close && (
+          <aside className={`email-side-content ${isVisible ? 'slide-in' : 'slide-out'}`}>
             <div onClick={handleClose} className="close"></div>
             {selectedEmail && (
               <EmailBody
