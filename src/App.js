@@ -24,7 +24,7 @@ function App() {
       .then((data) => {
         setEmail(data.list);
         setFilteredEmails(data.list);
-        setClose(false)
+        setClose(false);
       })
       .catch((error) => {
         console.log(`Error in fetching emails: ${error}`);
@@ -164,7 +164,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(close);
+
 
   }, [status])
   const handleClose = () => {
