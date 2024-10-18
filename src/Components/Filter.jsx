@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Filter = ({ onHandleFilter, activeFilter }) => {
-    console.log(activeFilter)
+
     return (
         <div className='filter' style={{ color: "black" }}>
             <legend>Filter By:</legend>

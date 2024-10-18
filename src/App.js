@@ -24,6 +24,7 @@ function App() {
       .then((data) => {
         setEmail(data.list);
         setFilteredEmails(data.list);
+        setClose(false)
       })
       .catch((error) => {
         console.log(`Error in fetching emails: ${error}`);
@@ -41,7 +42,7 @@ function App() {
   }, []);
 
   const handleSelectedEmail = (emailData) => {
-    setClose(false)
+    setClose(true)
 
     setIsVisible(false);
 
@@ -53,8 +54,8 @@ function App() {
     fetch(`https://flipkart-email-mock.now.sh/?id=${emailData.id}`)
       .then((response) => response.json())
       .then((data) => {
-        setEmailBody(data);
         setIsVisible(true);
+        setEmailBody(data);
       })
       .catch((error) => {
         console.log("Error in fetching email body", error);
@@ -117,7 +118,7 @@ function App() {
     });
   };
   const handleFilter = (type) => {
-    setClose(true)
+    setClose(false)
     setActiveFilter(type);
 
     if (type === "All") {
@@ -163,11 +164,12 @@ function App() {
   };
 
   useEffect(() => {
-
+    console.log(close);
 
   }, [status])
   const handleClose = () => {
-    setClose(true)
+    setClose(false)
+
   }
 
 
@@ -176,7 +178,7 @@ function App() {
       <Filter onHandleFilter={handleFilter} activeFilter={activeFilter} />
 
       <section className="email-layout">
-        <article className={`email-list ${selectedEmail && !close && "display-none"}`}>
+        <article className={`email-list ${close ? "display-none" : "display"}`}>
           {filteredEmails.length > 0 ? (
             filteredEmails.map((email) => (
               <EmailCard
@@ -192,21 +194,21 @@ function App() {
           )}
         </article>
 
-        {!close && (
-          <aside className={`email-side-content ${isVisible ? 'slide-in' : 'slide-out'}`}>
-            <div onClick={handleClose} className="close"></div>
-            {selectedEmail && (
-              <EmailBody
-                key={selectedEmail.id}
-                data={selectedEmail}
-                body={emailBody}
-                handleMark={handleFavSelected}
-                status={status}
-                handleUnmark={handleUnmark}
-              />
-            )}
-          </aside>
-        )}
+
+        <aside className={`email-side-content ${isVisible ? 'slide-in' : 'slide-out'} ${close ? "" : "display-none"}`}>
+          <div onClick={handleClose} className="close"></div>
+          {selectedEmail && (
+            <EmailBody
+              key={selectedEmail.id}
+              data={selectedEmail}
+              body={emailBody}
+              handleMark={handleFavSelected}
+              status={status}
+              handleUnmark={handleUnmark}
+            />
+          )}
+        </aside>
+
       </section>
 
       <nav className="page-container">
